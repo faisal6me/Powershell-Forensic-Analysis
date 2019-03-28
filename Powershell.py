@@ -65,7 +65,7 @@ def main():
     for any, dirs, files in os.walk("C:\\Windows\\System32\winevt\\Logs"):
         for file_names in files:
             if file_names=="Microsoft-Windows-PowerShell%4Operational.evtx":
-                with Evtx(os.path.abspath("C:\Windows\System32\winevt\Logs\\" + file_names)) as evtx:  #Here where the Magic Happen 
+                with Evtx(os.path.abspath("C:\Windows\System32\winevt\Logs\\" + file_names)) as evtx:  
                     script_data = Magic(evtx)
                     OutPut(script_data)
 				
