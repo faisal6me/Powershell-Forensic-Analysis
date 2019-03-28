@@ -45,7 +45,7 @@ def Magic(evtx):
 	
 	
 	
-"""This Function Used To change The XML encoding From  EVTX which is XML Version =01 to Microsoft 2004 format utf-8"""
+"""This Function Used To change The XML encoding From EVTX which is XML ersion=\"1.0" to Microsoft 2004 format utf-8"""
 def lxml(raw): 
     utf8_parser = etree.XMLParser(encoding='utf-8')
     return etree.fromstring("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>%s" %
