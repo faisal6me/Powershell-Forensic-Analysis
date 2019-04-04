@@ -80,7 +80,7 @@ def main():
     for root, subdirs, files in os.walk("C:\\Windows\\System32\winevt\\Logs"):
         for file_names in files:
             if file_names=="Microsoft-Windows-PowerShell%4Operational.evtx":
-                with Evtx(os.path.abspath("C:\Windows\System32\winevt\Logs\\" + file_names)) as evtx:  #Here where the Magic Happen 
+                with Evtx(os.path.abspath("C:\Windows\System32\winevt\Logs\\" + file_names)) as evtx: 
                     script_data = Magic(evtx)
                     z = OutPut(script_data)
 	get_all_file_zip(z)
