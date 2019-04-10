@@ -87,10 +87,10 @@ def get_all_file_zip(directory):
 		
 def main():
 
-    for root, subdirs, files in os.walk("C:\\Users\\Mrzx\\Desktop\\POershell\\Mail"):
+    for root, subdirs, files in os.walk("C:\\Users\\%Userprofile%\\Desktop\\POershell\\Mail"):
         for file_names in files:
             if file_names=="WindowsPowerShell.evtx":
-                with Evtx(os.path.abspath("C:\\Users\\Mrzx\\Desktop\\POershell\\Mail\\" + file_names)) as evtx: 
+                with Evtx(os.path.abspath("C:\\Users\\\%Userprofile%\\Desktop\\POershell\\Mail\\" + file_names)) as evtx: 
                     script_data = Magic(evtx)
 					#to_Baes64(script_data)
                     z =OutPut(script_data)
