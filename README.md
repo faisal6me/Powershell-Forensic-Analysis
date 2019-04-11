@@ -10,7 +10,7 @@ pip install python-evtx
 >Then Yo R Good To Go !
 
 ```
-Python Powershell.py 
+WindowsPowerShell.py
 ```
 
 Happy Hunting!! :shipit:
