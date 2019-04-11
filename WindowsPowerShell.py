@@ -1,3 +1,4 @@
+    
 import re,os,csv
 from lxml import etree
 from Evtx.Evtx import Evtx
@@ -29,9 +30,13 @@ def Magic(evtx):
 					if "HostApplication" in line:
 						line.split("HostApplication=")[1]
 						path=line
-					else:
-						path="No Exe"
-				ps_scripts_ran.append([R_ID, str(ctime).replace(" ", "Timee") + "Z",Computer,path])
+				
+				exists = False
+				for item in ps_scripts_ran:
+					if item[3]== path:
+						exists = True
+				if not exists:
+					ps_scripts_ran.append([R_ID, str(ctime).replace(" ", "Timee") + "Z",Computer,path])
 
 		except Exception :
 			continue
@@ -87,10 +92,10 @@ def get_all_file_zip(directory):
 		
 def main():
 
-    for root, subdirs, files in os.walk("C:\\Users\\%Userprofile%\\Desktop\\POershell\\Mail"):
+    for root, subdirs, files in os.walk("C:\\Windows\\System32\\winevt\\Logs"):
         for file_names in files:
-            if file_names=="WindowsPowerShell.evtx":
-                with Evtx(os.path.abspath("C:\\Users\\\%Userprofile%\\Desktop\\POershell\\Mail\\" + file_names)) as evtx: 
+            if file_names=="Windows PowerShell.evtx":
+                with Evtx(os.path.abspath("C:\\Windows\\System32\\winevt\\Logs\\" + file_names)) as evtx: 
                     script_data = Magic(evtx)
 					#to_Baes64(script_data)
                     z =OutPut(script_data)
@@ -105,114 +110,3 @@ if __name__ == "__main__":
     main()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-import xml.etree.cElementTree as ET
-import re
-
-with open("WindowsEvent.xml") as f:
-    xml = f.read()
-tree = ET.fromstring(re.sub(r"(<\?xml[^>]+\?>)", r"\1<root>", xml) + "</root>")
-
-print tree
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-from xml.dom import minidom
-
-filename = "WindowsEvent.xml"
-file = open(filename, "r")
-
-xmldoc = minidom.parse(file)
-itemlist = xmldoc.getElementsByTagName('HostApplication=')
-print(len(itemlist))
-"""
