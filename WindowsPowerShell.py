@@ -5,7 +5,7 @@ from Evtx.Evtx import Evtx
 from Evtx.Views import evtx_file_xml_view
 from zipfile import ZipFile 
 import base64
-
+from base64 import b64decode
 
 
 def Magic(evtx):
@@ -31,12 +31,16 @@ def Magic(evtx):
 						line.split("HostApplication=")[1]
 						path=line
 				
+				regex_Base64=(path.split('-enc')[1]).strip()
+				
+			
+				
 				exists = False
 				for item in ps_scripts_ran:
 					if item[3]== path:
 						exists = True
 				if not exists:
-					ps_scripts_ran.append([R_ID, str(ctime).replace(" ", "Timee") + "Z",Computer,path])
+					ps_scripts_ran.append([R_ID, str(ctime).replace(" ", "Timee") + "Z",Computer,path,regex_Base64])
 
 		except Exception :
 			continue
@@ -52,7 +56,21 @@ def to_lxml(record_xml):
  
 	
 def to_Baes64(Coded):
-	x=Coded[3]
+	bb=""
+	for each in Coded:
+		bb=each[4]
+	f=base64.b64decode(bb).strip()
+	decript=[]
+	for each in f :
+		if each ==  '\x00' :
+			pass
+		else:
+			decript.append(each)
+	
+	return "".join(decript)
+
+	"""
+	x=Coded[4]
 	decodedBase64=[]
 	for each in x:
 		try:
@@ -60,18 +78,18 @@ def to_Baes64(Coded):
 				decodedBase64.append(base64.b64decode(each))
 		except Exception :
 			continue
-	return decodedBase64
-	
+	print decodedBase64
+	"""
 	
 	
 	
 
 def OutPut(script_data):
 	start = csv.writer(open("output.csv","w"))
-	start.writerow(['RecordID','Time','Computer_Name','Exeution'])
+	start.writerow(['RecordID','Time','Computer_Name','Exeution','Base64'])
 	path_s=[]
 	for entries in script_data:
-		start.writerow([entries[0], entries[1], entries[2],entries[3]])
+		start.writerow([entries[0], entries[1], entries[2],entries[3],to_Baes64(script_data)])
 		path_s.append(entries[3])
 	return path_s
 		
@@ -92,12 +110,12 @@ def get_all_file_zip(directory):
 		
 def main():
 
-    for root, subdirs, files in os.walk("C:\\Windows\\System32\\winevt\\Logs"):
+    for root, subdirs, files in os.walk("C:\\Users\\Mrzx\\Desktop\\scripts\\2"):
         for file_names in files:
             if file_names=="Windows PowerShell.evtx":
-                with Evtx(os.path.abspath("C:\\Windows\\System32\\winevt\\Logs\\" + file_names)) as evtx: 
+                with Evtx(os.path.abspath("C:\\Users\\Mrzx\\Desktop\\scripts\\2\\" + file_names)) as evtx: 
                     script_data = Magic(evtx)
-					#to_Baes64(script_data)
+					#to_Baes64(Magic(evtx))
                     z =OutPut(script_data)
 
 		#get_all_file_zip(z)
