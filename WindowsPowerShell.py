@@ -1,4 +1,3 @@
-    
 import re,os,csv
 from lxml import etree
 from Evtx.Evtx import Evtx
@@ -10,7 +9,6 @@ from base64 import b64decode
 
 def Magic(evtx):
 	ps_scripts_ran = []
-
 	for xml, row in evtx_file_xml_view(evtx.get_file_header()):
 		try:
 			for entry in to_lxml(xml):
@@ -31,8 +29,15 @@ def Magic(evtx):
 						line.split("HostApplication=")[1]
 						path=line
 				
-				regex_Base64=(path.split('-enc')[1]).strip()
+				regex_Base64=""
 				
+				for each in path:
+					if "-enc" in path:
+						regex_Base64=(path.split('-enc')[1]).strip()
+					
+					else:
+						regex_Base64="No Base64 Found"
+					
 			
 				
 				exists = False
@@ -49,6 +54,7 @@ def Magic(evtx):
 	
 	
 	
+	
 def to_lxml(record_xml):
     utf8_parser = etree.XMLParser(encoding='utf-8')
     return etree.fromstring("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>%s" %
@@ -56,30 +62,19 @@ def to_lxml(record_xml):
  
 	
 def to_Baes64(Coded):
-	bb=""
-	for each in Coded:
-		bb=each[4]
-	f=base64.b64decode(bb).strip()
 	decript=[]
-	for each in f :
-		if each ==  '\x00' :
-			pass
+	for each in Coded:
+		if each[4] == "No Base64 Found":
+			return each[4]
 		else:
-			decript.append(each)
+			f=base64.b64decode(each[4]).strip()
+			for each in f :
+				if each ==  '\x00' :
+					pass
+				else:
+					decript.append(each)
 	
-	return "".join(decript)
-
-	"""
-	x=Coded[4]
-	decodedBase64=[]
-	for each in x:
-		try:
-			if len(each) % 4 == 0 and re.search('^[A-Za-z0-9+\/=]+\Z', each):
-				decodedBase64.append(base64.b64decode(each))
-		except Exception :
-			continue
-	print decodedBase64
-	"""
+			return "".join(decript)
 	
 	
 	
@@ -92,6 +87,9 @@ def OutPut(script_data):
 		start.writerow([entries[0], entries[1], entries[2],entries[3],to_Baes64(script_data)])
 		path_s.append(entries[3])
 	return path_s
+		
+		
+
 		
 
 def get_all_file_zip(directory):
@@ -107,16 +105,17 @@ def get_all_file_zip(directory):
 		
 					
 	
+	
 		
 def main():
 
-    for root, subdirs, files in os.walk("C:\\Users\\Mrzx\\Desktop\\scripts\\2"):
+    for root, subdirs, files in os.walk("C:\\Users\\Mrzx\\Desktop\\scripts\\3"):
         for file_names in files:
             if file_names=="Windows PowerShell.evtx":
-                with Evtx(os.path.abspath("C:\\Users\\Mrzx\\Desktop\\scripts\\2\\" + file_names)) as evtx: 
+                with Evtx(os.path.abspath("C:\\Users\\Mrzx\\Desktop\\scripts\\3\\" + file_names)) as evtx: 
                     script_data = Magic(evtx)
-					#to_Baes64(Magic(evtx))
-                    z =OutPut(script_data)
+					#x=to_Baes64( Magic(evtx))
+                    z = OutPut(script_data)
 
 		#get_all_file_zip(z)
 				
@@ -126,5 +125,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
