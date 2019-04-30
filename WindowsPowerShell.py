@@ -67,7 +67,7 @@ def to_Baes64(Coded):
 	if Coded == "No Base64 Found":
 		return Coded
 	else:
-		f=base64.b64decode(Coded).strip()
+		f=b64decode(Coded).strip()
 		for each in f :
 			if each ==  '\x00' :
 				pass
@@ -91,17 +91,21 @@ def OutPut(script_data):
 
 
 def get_all_file_zip(directory):
-	with ZipFile('my_python_files.zip','w') as zip:
+	with ZipFile('Suspicious_files.zip','w') as zip:
 		for each in directory:
-			if "TEMP" or "ProgramData" in each:
-				try:
-					zip.write(each)					
-				except WindowsError:
-					continue
-			else:
+			x= each.split()
+			for each2 in x :
+				if "C:" in each2:
+					x= each2.lstrip('HostApplication=')
+					if "TEMP" or "ProgramData" in x:
+						try:
+							zip.write(x)					
+						except WindowsError:
+							continue
+				else:
+					pass
 				pass
-		
-		
+
 def main():
 
     for root, subdirs, files in os.walk("C:\\Windows\\System32\\winevt\\Logs"):
@@ -110,7 +114,7 @@ def main():
                 with Evtx(os.path.abspath("C:\\Windows\\System32\\winevt\\Logs\\" + file_names)) as evtx: 
                     script_data = Magic(evtx)
                     z = OutPut(script_data)
-		#get_all_file_zip(z)
+		get_all_file_zip(z)
 				
 
 
