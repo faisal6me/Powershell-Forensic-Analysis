@@ -19,5 +19,5 @@ Now parse("Microsoft-Windows-PowerShell%4Operational.evtx")Inculde ALL event tha
 
 Usage:
 
-PowershellOperationAnalyzer.py "C:\Windows\System32\winevt\Logs\Microsoft-Windows-PowerShell%4Operational.evtx"
+>PowershellOperationAnalyzer.py "C:\Windows\System32\winevt\Logs\Microsoft-Windows-PowerShell%4Operational.evtx"
 
