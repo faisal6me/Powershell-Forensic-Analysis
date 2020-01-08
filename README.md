@@ -15,7 +15,7 @@ python WindowsPowerShell.py
 
 Happy Hunting!! :shipit:
 
-Powershell Version(2) can now parse("Microsoft-Windows-PowerShell%4Operational.evtx")Inculde ALL event that has Data(Note No dublication) 
+Now parse("Microsoft-Windows-PowerShell%4Operational.evtx")Inculde ALL event that has Data(Note No dublication) 
 
 Usage:
 
