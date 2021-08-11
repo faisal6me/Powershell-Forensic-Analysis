@@ -82,9 +82,7 @@ def to_lxml(record_xml):
             record_xml.replace("xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"", "").encode('utf-8'), parser=utf8_parser)
  
 	
-def to_Base
-
-64(Coded):
+def to_Base64(Coded):
 	decript=[]
 	if Coded == "No Base64 Found":
 		return Coded
