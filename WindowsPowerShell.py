@@ -82,7 +82,9 @@ def to_lxml(record_xml):
             record_xml.replace("xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"", "").encode('utf-8'), parser=utf8_parser)
  
 	
-def to_Baes64(Coded):
+def to_Base
+
+64(Coded):
 	decript=[]
 	if Coded == "No Base64 Found":
 		return Coded
@@ -104,7 +106,7 @@ def OutPut(script_data):
 	path_s=[]
 	
 	for entries in script_data:
-		start.writerow([entries[0], entries[1], entries[2],entries[3],to_Baes64(entries[4])])
+		start.writerow([entries[0], entries[1], entries[2],entries[3],to_Base64(entries[4])])
 		path_s.append(entries[3])
 	return path_s
 
