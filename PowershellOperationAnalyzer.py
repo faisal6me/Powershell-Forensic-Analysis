@@ -30,6 +30,7 @@ def Magic():
 
 
 def OutPut(script_data):
+    #name the output file
     start = csv.writer(open("output.csv","w"))
     start.writerow(['EventID','Source','Time','SID','Command_line'])
     path_s=[]
