@@ -17,7 +17,7 @@ Happy Hunting!! :shipit:
 
 Now parse("Microsoft-Windows-PowerShell%4Operational.evtx")Inculde ALL event that has Data(Note No dublication) 
 
-Usage:
+Usage::
 
 >PowershellOperationAnalyzer.py "C:\Windows\System32\winevt\Logs\Microsoft-Windows-PowerShell%4Operational.evtx"
 
